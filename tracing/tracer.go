@@ -151,7 +151,7 @@ func NewContextFromDeterministicString(traceIDString string, spanIDString string
 	return trace.ContextWithSpanContext(context.Background(), trace.NewSpanContext(trace.SpanContextConfig{
 		TraceID:    traceID,
 		SpanID:     spanID,
-		TraceFlags: 0x1,
+		TraceFlags: 0x0,
 	}))
 }
 
