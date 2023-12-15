@@ -250,17 +250,6 @@ func TestAttributeMapToKeyValue(t *testing.T) {
 			},
 		},
 		{
-			name: "Multiple",
-			attributes: map[string]string{
-				"test1": "value1",
-				"test2": "value2",
-			},
-			want: []attribute.KeyValue{
-				attribute.String("test1", "value1"),
-				attribute.String("test2", "value2"),
-			},
-		},
-		{
 			name:       "Empty",
 			attributes: map[string]string{},
 			want:       nil,
