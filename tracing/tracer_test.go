@@ -186,7 +186,6 @@ func TestNewContextFromDeterministicString(t *testing.T) {
 		traceIDString string
 		spanIDString  string
 		wantTraceID   trace.TraceID
-		wantSpanID    trace.SpanID
 		wantErr       bool
 	}{
 		{
@@ -194,7 +193,6 @@ func TestNewContextFromDeterministicString(t *testing.T) {
 			traceIDString: "1234567",
 			spanIDString:  "1234567",
 			wantTraceID:   mustTraceIDFromHex("fcea920f7412b5da7be0cf42b8c93759"),
-			wantSpanID:    mustSpanIDFromHex("fcea920f7412b5da"),
 			wantErr:       false,
 		},
 		{
@@ -202,14 +200,13 @@ func TestNewContextFromDeterministicString(t *testing.T) {
 			traceIDString: "",
 			spanIDString:  "",
 			wantTraceID:   mustTraceIDFromHex("d41d8cd98f00b204e9800998ecf8427e"),
-			wantSpanID:    mustSpanIDFromHex("d41d8cd98f00b204"),
 			wantErr:       false,
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			ctx := NewContextFromDeterministicString(tc.traceIDString, tc.spanIDString)
+			ctx := NewContextFromDeterministicString(tc.traceIDString)
 			span := trace.SpanContextFromContext(ctx)
 
 			if tc.wantErr {
@@ -217,7 +214,7 @@ func TestNewContextFromDeterministicString(t *testing.T) {
 					t.Errorf("expected invalid span context, got valid")
 				}
 			} else {
-				if !span.IsValid() || span.TraceID() != tc.wantTraceID || span.SpanID() != tc.wantSpanID {
+				if !span.IsValid() || span.TraceID() != tc.wantTraceID {
 					t.Errorf("unexpected span context")
 				}
 			}

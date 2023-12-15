@@ -11,12 +11,8 @@ func (c CircleCI) GetCIName() string {
 	return "CircleCI"
 }
 
-func (c CircleCI) GetTraceVal() string {
+func (c CircleCI) GetTraceString() string {
 	return os.Getenv("CIRCLE_WORKFLOW_ID")
-}
-
-func (c CircleCI) GetSpanVal() string {
-	return os.Getenv("CIRCLE_WORKFLOW_JOB_ID")
 }
 
 func (c CircleCI) GetServiceName() string {
