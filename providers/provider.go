@@ -24,8 +24,7 @@ func DetectProvider() Provider {
 
 type Provider interface {
 	GetCIName() string
-	GetTraceVal() string
-	GetSpanVal() string
+	GetTraceString() string
 	GetServiceName() string
 	GetSpanName() string
 	GetAttributes() map[string]string
@@ -37,16 +36,8 @@ func (d DefaultProvider) GetCIName() string {
 	return "Default"
 }
 
-func (d DefaultProvider) GetTraceVal() string {
+func (d DefaultProvider) GetTraceString() string {
 	bytes := make([]byte, 16)
-	if _, err := rand.Read(bytes); err != nil {
-		return ""
-	}
-	return hex.EncodeToString(bytes)
-}
-
-func (d DefaultProvider) GetSpanVal() string {
-	bytes := make([]byte, 8)
 	if _, err := rand.Read(bytes); err != nil {
 		return ""
 	}

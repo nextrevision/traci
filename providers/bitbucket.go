@@ -11,12 +11,8 @@ func (b Bitbucket) GetCIName() string {
 	return "Bitbucket"
 }
 
-func (b Bitbucket) GetTraceVal() string {
+func (b Bitbucket) GetTraceString() string {
 	return os.Getenv("BITBUCKET_PIPELINE_UUID")
-}
-
-func (b Bitbucket) GetSpanVal() string {
-	return os.Getenv("BITBUCKET_BUILD_NUMBER")
 }
 
 func (b Bitbucket) GetServiceName() string {

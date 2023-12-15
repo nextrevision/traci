@@ -3,6 +3,8 @@ package tracing
 import (
 	"context"
 	"crypto/md5"
+	"crypto/rand"
+	"encoding/hex"
 	"errors"
 	"fmt"
 	"go.opentelemetry.io/otel"
@@ -137,21 +139,23 @@ func NewContextFromEnvTraceParent(ctx context.Context) (context.Context, error) 
 //	ctx := NewContextFromDeterministicString("foo", "bar")
 //	tracer := otel.Tracer("test-tracer")
 //	ctxSpan, span := tracer.Start(ctx, "test-span")
-func NewContextFromDeterministicString(traceIDString string, spanIDString string) context.Context {
+func NewContextFromDeterministicString(traceIDString string) context.Context {
 	traceID, err := genTraceIDFromString(traceIDString)
 	if err != nil {
 		log.Fatalf("could not generate trace ID from string %s\n", traceIDString)
 	}
 
-	spanID, err := genSpanIDFromString(spanIDString)
+	bytes := make([]byte, 8)
+	rand.Read(bytes)
+	spanID, err := genSpanIDFromString(hex.EncodeToString(bytes))
 	if err != nil {
-		log.Fatalf("could not generate span ID from string %s\n", spanIDString)
+		log.Fatalf("could not generate trace ID from string %s\n", traceIDString)
 	}
 
 	return trace.ContextWithSpanContext(context.Background(), trace.NewSpanContext(trace.SpanContextConfig{
 		TraceID:    traceID,
 		SpanID:     spanID,
-		TraceFlags: 0x1,
+		TraceFlags: 0x0,
 	}))
 }
 

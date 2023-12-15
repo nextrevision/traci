@@ -12,12 +12,8 @@ func (g GitHubActions) GetCIName() string {
 	return "GitHub-Actions"
 }
 
-func (g GitHubActions) GetTraceVal() string {
+func (g GitHubActions) GetTraceString() string {
 	return fmt.Sprintf("%s-%s-%s", os.Getenv("GITHUB_RUN_ID"), os.Getenv("GITHUB_RUN_NUMBER"), os.Getenv("GITHUB_RUN_ATTEMPT"))
-}
-
-func (g GitHubActions) GetSpanVal() string {
-	return fmt.Sprintf("%s-%s", g.GetTraceVal(), os.Getenv("GITHUB_JOB"))
 }
 
 func (g GitHubActions) GetServiceName() string {

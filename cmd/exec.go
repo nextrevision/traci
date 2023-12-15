@@ -52,18 +52,18 @@ func runCommand(cmd *cobra.Command, args []string) error {
 
 	ciProvider := providers.DetectProvider()
 
+	command := args[0]
+	commandPath, _ := exec.LookPath(command)
+
 	serviceName := ciProvider.GetServiceName()
 	if config.ServiceName != "" {
 		serviceName = config.ServiceName
 	}
 
-	spanName := ciProvider.GetSpanName()
+	spanName := fmt.Sprintf("%s:%s", ciProvider.GetSpanName(), command)
 	if config.SpanName != "" {
 		spanName = config.SpanName
 	}
-
-	command := args[0]
-	commandPath, _ := exec.LookPath(command)
 
 	// Set resource attributes on the span
 	var resourceAttributes []attribute.KeyValue
@@ -80,7 +80,7 @@ func runCommand(cmd *cobra.Command, args []string) error {
 
 	traceCtx, err := tracing.NewContextFromEnvTraceParent(ctx)
 	if err != nil {
-		traceCtx = tracing.NewContextFromDeterministicString(ciProvider.GetTraceVal(), ciProvider.GetSpanVal())
+		traceCtx = tracing.NewContextFromDeterministicString(ciProvider.GetTraceString())
 	}
 
 	traceProvider := tracing.NewTraceProvider(traceCtx, serviceName, resourceAttributes)
