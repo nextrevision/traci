@@ -16,7 +16,7 @@ var rootCmd = &cobra.Command{
 	Use:     "traci",
 	Short:   "traci wraps commands in OpenTelemetry tracing and sends them to a OTel endpoint",
 	Run:     func(cmd *cobra.Command, args []string) {},
-	Version: "0.1.0",
+	Version: "0.2.0",
 }
 
 func Execute() {
