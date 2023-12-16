@@ -50,7 +50,7 @@ func (d DefaultProvider) GetServiceName() string {
 }
 
 func (d DefaultProvider) GetSpanName() string {
-	return ""
+	return "cmd"
 }
 
 func (d DefaultProvider) GetAttributes() map[string]string {
