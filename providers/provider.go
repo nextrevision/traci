@@ -24,7 +24,8 @@ func DetectProvider() Provider {
 
 type Provider interface {
 	GetCIName() string
-	GetTraceString() string
+	GetPipelineID() string
+	GetJobID() string
 	GetServiceName() string
 	GetSpanName() string
 	GetAttributes() map[string]string
@@ -36,12 +37,12 @@ func (d DefaultProvider) GetCIName() string {
 	return "Default"
 }
 
-func (d DefaultProvider) GetTraceString() string {
-	bytes := make([]byte, 16)
-	if _, err := rand.Read(bytes); err != nil {
-		return ""
-	}
-	return hex.EncodeToString(bytes)
+func (d DefaultProvider) GetPipelineID() string {
+	return d.genTraceID()
+}
+
+func (d DefaultProvider) GetJobID() string {
+	return d.genTraceID()
 }
 
 func (d DefaultProvider) GetServiceName() string {
@@ -54,4 +55,12 @@ func (d DefaultProvider) GetSpanName() string {
 
 func (d DefaultProvider) GetAttributes() map[string]string {
 	return map[string]string{}
+}
+
+func (d DefaultProvider) genTraceID() string {
+	bytes := make([]byte, 16)
+	if _, err := rand.Read(bytes); err != nil {
+		return ""
+	}
+	return hex.EncodeToString(bytes)
 }
