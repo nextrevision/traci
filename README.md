@@ -163,7 +163,7 @@ build:
 deploy:
   stage: deploy
   script:
-    - trace exec /bin/sh -c 'traci /bin/sh -c "echo $TRACEPARENT"'
+    - traci exec /bin/sh -c 'traci exec /bin/sh -c "echo $TRACEPARENT"'
     - traci exec sleep 3
 ```
 
