@@ -167,6 +167,14 @@ deploy:
     - traci exec sleep 3
 ```
 
+## Better Together
+
+Use traci with other CI instrumentations:
+
+- [Maven OTel instrumentation](https://github.com/open-telemetry/opentelemetry-java-contrib/tree/main/maven-extension)
+- [Pytest OTel instrumentation](https://pypi.org/project/pytest-otel/)
+- [Ansible OTel instrumentation](https://docs.ansible.com/ansible/latest/collections/community/general/opentelemetry_callback.html)
+
 ## Inspiration
 
 Traci is heavily inspired by the following projects:
