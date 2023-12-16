@@ -42,12 +42,12 @@ supports CLI flags. CLI flags take precedence over environment variables.
 
 ### Traci Config
 
-| Environment Variable     | `execf` CLI Flag     | Description                                                  |
-|--------------------------|----------------------|--------------------------------------------------------------|
-| `TRACI_SERVICE_NAME`     | `--service-name`     | The name of the service                                      |
-| `TRACI_SPAN_NAME`        | `--span-name`        | The name of the span                                         |
-| `TRACI_TRACE_BOUNDARY`   | `--trace-boundary`   | The scope of the generated trace. Can be `pipeline` or `job` |
-| `TRACI_TAG_COMMAND_ARGS` | `--tag-command-args` | Include command args as tags in the span                     |
+| Environment Variable     | `execf` CLI Flag       | Description                                                  |
+|--------------------------|------------------------|--------------------------------------------------------------|
+| `TRACI_SERVICE_NAME`     | `--service-name, -n`   | The name of the service                                      |
+| `TRACI_SPAN_NAME`        | `--span-name, -s`      | The name of the span                                         |
+| `TRACI_TRACE_BOUNDARY`   | `--trace-boundary, -t` | The scope of the generated trace. Can be `pipeline` or `job` |
+| `TRACI_TAG_COMMAND_ARGS` | `--tag-command-args`   | Include command args as tags in the span                     |
 
 ### OpenTelemetry Config
 
