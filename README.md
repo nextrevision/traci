@@ -86,7 +86,7 @@ The default trace boundary is `pipeline`.
 - Travis CI: Build
 - Bitbucket: Pipeline
 
-`Job` is a generic term to describe a grouping of steps. A job includes the following CI vendor concepts:
+`Job` is a generic term to describe a grouping of commands. A job includes the following CI vendor concepts:
 
 - GitHub Actions: Job
 - GitLab CI: Job
