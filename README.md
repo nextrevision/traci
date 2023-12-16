@@ -128,6 +128,45 @@ example:
 traci execf --span-name foo -- echo "hello world"
 ```
 
+## Examples
+
+### GitLab CI
+
+```yaml
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  OTEL_EXPORTER_OTLP_ENDPOINT: https://jaeger:4317
+  OTEL_EXPORTER_OTLP_PROTOCOL: grpc
+
+default:
+  image: alpine
+  before_script:
+    - wget -O /tmp/traci.tgz https://github.com/nextrevision/traci/releases/download/v0.3.0/traci_0.3.0_linux_amd64.tar.gz && tar -C /usr/local/bin -xzf /tmp/traci.tgz traci
+    - traci detect
+
+test:
+  stage: test
+  script:
+    - traci execf --tag-command-args -- /bin/sh -c 'echo $TRACEPARENT'
+    - traci exec sleep 1
+
+build:
+  stage: build
+  script:
+    - traci exec env
+    - traci exec sleep 2
+
+deploy:
+  stage: deploy
+  script:
+    - trace exec /bin/sh -c 'traci /bin/sh -c "echo $TRACEPARENT"'
+    - traci exec sleep 3
+```
+
 ## Inspiration
 
 Traci is heavily inspired by the following projects:
