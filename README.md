@@ -2,7 +2,7 @@
 
 OpenTelemetry tracing for CI pipelines
 
-Traci is a CI command wrapper that generates and uploads traces in OpenTelemetry format. It uses the OpenTelemetry SDK
+Traci is a CI command wrapper that generates and exports traces in OpenTelemetry format. It uses the OpenTelemetry SDK
 under the hood and can be configured to send traces to any OpenTelemetry-compatible backend.
 
 Traci supports CI detection for the following CI platforms:
