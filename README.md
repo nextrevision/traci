@@ -128,3 +128,11 @@ example:
 traci execf --span-name foo -- echo "hello world"
 ```
 
+## Inspiration
+
+Traci is heavily inspired by the following projects:
+
+- [buildevents](https://github.com/honeycombio/buildevents)
+- [otel-cli](https://github.com/equinix-labs/otel-cli)
+- [Jenkins otel plugin](https://github.com/jenkinsci/opentelemetry-plugin/tree/master)
+- [tracepusher](https://github.com/agardnerIT/tracepusher)
