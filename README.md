@@ -20,7 +20,7 @@ If you don't see your CI provider, open an issue or submit a PR!
 ## Quickstart
 
 ```bash
-go get github.com/nextrevision/traci
+go install github.com/nextrevision/traci@latest
 
 traci exec echo "hello world"
 ```
