@@ -2,6 +2,8 @@
 
 OpenTelemetry tracing for CI pipelines
 
+![Traci Example](examples/example-trace.png)
+
 Traci is a CI command wrapper that generates and exports traces in OpenTelemetry format. It uses the OpenTelemetry SDK
 under the hood and can be configured to send traces to any OpenTelemetry-compatible backend.
 
@@ -145,7 +147,7 @@ variables:
 default:
   image: alpine
   before_script:
-    - wget -O /tmp/traci.tgz https://github.com/nextrevision/traci/releases/download/v0.3.0/traci_0.3.0_linux_amd64.tar.gz && tar -C /usr/local/bin -xzf /tmp/traci.tgz traci
+    - wget -O /tmp/traci.tgz https://github.com/nextrevision/traci/releases/download/v0.3.2/traci_0.3.2_linux_amd64.tar.gz && tar -C /usr/local/bin -xzf /tmp/traci.tgz traci
     - traci detect
 
 test:
