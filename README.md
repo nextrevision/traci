@@ -40,11 +40,12 @@ supports CLI flags. CLI flags take precedence over environment variables.
 
 ### Traci Config
 
-| Environment Variable     | `execf` CLI Flag     | Description                              |
-|--------------------------|----------------------|------------------------------------------|
-| `TRACI_SERVICE_NAME`     | `--service-name`     | The name of the service                  |
-| `TRACI_SPAN_NAME`        | `--span-name`        | The name of the span                     |
-| `TRACI_TAG_COMMAND_ARGS` | `--tag-command-args` | Include command args as tags in the span |
+| Environment Variable     | `execf` CLI Flag     | Description                                                  |
+|--------------------------|----------------------|--------------------------------------------------------------|
+| `TRACI_SERVICE_NAME`     | `--service-name`     | The name of the service                                      |
+| `TRACI_SPAN_NAME`        | `--span-name`        | The name of the span                                         |
+| `TRACI_TRACE_BOUNDARY`   | `--trace-boundary`   | The scope of the generated trace. Can be `pipeline` or `job` |
+| `TRACI_TAG_COMMAND_ARGS` | `--tag-command-args` | Include command args as tags in the span                     |
 
 ### OpenTelemetry Config
 
@@ -67,6 +68,29 @@ Traci detects CI providers by environment variables. Most CI providers offer a c
 "pipeline" or "workflow". Traci uses these identifiers to generate repeatable trace IDs without the need for manual
 propagation via some other means. This means commands in different jobs/steps of a pipeline/workflow will associate
 with the same trace ID automatically.
+
+#### Trace Boundary
+
+Traci can use the CI deterministic trace ID to determine the trace boundary. The trace boundary determines how far a
+trace will propagate. For example, if the trace boundary is set to `pipeline`, the trace will include all wrapped commands
+in every job in a pipeline. If the trace boundary is set to `job`, the trace will only include all commands in the job.
+The default trace boundary is `pipeline`.
+
+`Pipeline` is a generic term to describe a grouping of jobs. A pipeline includes the following CI vendor concepts:
+
+- GitHub Actions: Workflow
+- GitLab CI: Pipeline
+- CircleCI: Workflow
+- Travis CI: Build
+- Bitbucket: Pipeline
+
+`Job` is a generic term to describe a grouping of steps. A job includes the following CI vendor concepts:
+
+- GitHub Actions: Job
+- GitLab CI: Job
+- CircleCI: Job
+- Travis CI: Job
+- Bitbucket: Step
 
 ### `TRACEPARENT` Environment Variable
 

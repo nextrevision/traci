@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"github.com/nextrevision/traci/config"
 	"github.com/nextrevision/traci/providers"
 	"github.com/nextrevision/traci/tracing"
 	"github.com/spf13/cobra"
@@ -48,7 +49,7 @@ func init() {
 func runCommand(cmd *cobra.Command, args []string) error {
 	ctx := cmd.Context()
 
-	config := getConfig()
+	traciConfig := getConfig()
 
 	ciProvider := providers.DetectProvider()
 
@@ -56,13 +57,13 @@ func runCommand(cmd *cobra.Command, args []string) error {
 	commandPath, _ := exec.LookPath(command)
 
 	serviceName := ciProvider.GetServiceName()
-	if config.ServiceName != "" {
-		serviceName = config.ServiceName
+	if traciConfig.ServiceName != "" {
+		serviceName = traciConfig.ServiceName
 	}
 
 	spanName := fmt.Sprintf("%s:%s", ciProvider.GetSpanName(), command)
-	if config.SpanName != "" {
-		spanName = config.SpanName
+	if traciConfig.SpanName != "" {
+		spanName = traciConfig.SpanName
 	}
 
 	// Set resource attributes on the span
@@ -71,16 +72,27 @@ func runCommand(cmd *cobra.Command, args []string) error {
 	resourceAttributes = append(resourceAttributes, semconv.ProcessExecutablePath(commandPath))
 	resourceAttributes = append(resourceAttributes, tracing.AttributeMapToKeyValue(ciProvider.GetAttributes())...)
 	resourceAttributes = append(resourceAttributes, attribute.String("traci.ci.provider", ciProvider.GetCIName()))
+	resourceAttributes = append(resourceAttributes, attribute.String("traci.boundary", traciConfig.TraceBoundary))
 	resourceAttributes = append(resourceAttributes, attribute.String("traci.version", rootCmd.Version))
 
 	// Add command args as a process attribute to the span if specified
-	if config.TagCommandArgs && len(args) > 1 {
+	if traciConfig.TagCommandArgs && len(args) > 1 {
 		resourceAttributes = append(resourceAttributes, semconv.ProcessCommandArgs(args[1:]...))
 	}
 
+	// If the TRACEPARENT environment variable is set, use it as the parent trace
 	traceCtx, err := tracing.NewContextFromEnvTraceParent(ctx)
 	if err != nil {
-		traceCtx = tracing.NewContextFromDeterministicString(ciProvider.GetTraceString())
+		var traceDeterministicString string
+		switch traciConfig.TraceBoundary {
+		case string(config.TraceBoundaryPipeline):
+			traceDeterministicString = ciProvider.GetPipelineID()
+		case string(config.TraceBoundaryJob):
+			traceDeterministicString = ciProvider.GetJobID()
+		default:
+			traceDeterministicString = ciProvider.GetPipelineID()
+		}
+		traceCtx = tracing.NewContextFromDeterministicString(traceDeterministicString)
 	}
 
 	traceProvider := tracing.NewTraceProvider(traceCtx, serviceName, resourceAttributes)

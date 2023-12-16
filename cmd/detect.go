@@ -20,7 +20,8 @@ func doDetect(cmd *cobra.Command, args []string) {
 	fmt.Printf("  provider: %s\n", provider.GetCIName())
 	fmt.Printf("  service name: %s\n", provider.GetServiceName())
 	fmt.Printf("  span name: %s\n", provider.GetSpanName())
-	fmt.Printf("  trace unique string: %s\n", provider.GetTraceString())
+	fmt.Printf("  pipeline id: %s\n", provider.GetPipelineID())
+	fmt.Printf("  job id: %s\n", provider.GetJobID())
 	fmt.Println("  attributes:")
 	for k, v := range provider.GetAttributes() {
 		fmt.Printf("    %s: %s\n", k, v)

@@ -11,8 +11,12 @@ func (g GitLabCI) GetCIName() string {
 	return "GitLab-CI"
 }
 
-func (g GitLabCI) GetTraceString() string {
+func (g GitLabCI) GetPipelineID() string {
 	return os.Getenv("CI_PIPELINE_ID")
+}
+
+func (g GitLabCI) GetJobID() string {
+	return os.Getenv("CI_JOB_ID")
 }
 
 func (g GitLabCI) GetServiceName() string {

@@ -11,8 +11,12 @@ func (t Travis) GetCIName() string {
 	return "Travis-CI"
 }
 
-func (t Travis) GetTraceString() string {
+func (t Travis) GetPipelineID() string {
 	return os.Getenv("TRAVIS_BUILD_ID")
+}
+
+func (t Travis) GetJobID() string {
+	return os.Getenv("TRAVIS_JOB_ID")
 }
 
 func (t Travis) GetServiceName() string {
