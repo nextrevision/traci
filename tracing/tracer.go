@@ -103,7 +103,7 @@ func newExporter(ctx context.Context) (sdktrace.SpanExporter, error) {
 
 // GenTraceParentString formats the TraceID and SpanID from the provided SpanContext and returns a W3C TraceParent string
 func GenTraceParentString(spanContext trace.SpanContext) string {
-	return fmt.Sprintf("00-%s-%s-00", spanContext.TraceID(), spanContext.SpanID())
+	return fmt.Sprintf("00-%s-%s-01", spanContext.TraceID(), spanContext.SpanID())
 }
 
 // NewContextFromEnvTraceParent generates a new context with a trace parent extracted from the `TRACEPARENT` environment variable.
@@ -111,7 +111,7 @@ func GenTraceParentString(spanContext trace.SpanContext) string {
 //
 // Example usage:
 //
-//	 os.Setenv("TRACEPARENT", "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-00")
+//	 os.Setenv("TRACEPARENT", "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01")
 //		ctx := NewContextFromEnvTraceParent(context.Background())
 func NewContextFromEnvTraceParent(ctx context.Context) (context.Context, error) {
 	val, present := os.LookupEnv(TraceParentKey)

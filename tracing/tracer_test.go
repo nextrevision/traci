@@ -99,13 +99,13 @@ func TestGenTraceParentString(t *testing.T) {
 				TraceID: mustTraceIDFromHex("4bf92f3577b34da6a3ce929d0e0e4736"),
 				SpanID:  mustSpanIDFromHex("00f067aa0ba902b7"),
 			}),
-			want: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-00",
+			want: "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
 		},
 
 		{
 			name:        "Empty input",
 			spanContext: trace.SpanContext{},
-			want:        "00-00000000000000000000000000000000-0000000000000000-00",
+			want:        "00-00000000000000000000000000000000-0000000000000000-01",
 		},
 	}
 
@@ -139,7 +139,7 @@ func TestNewContextFromEnvTraceParent(t *testing.T) {
 		{
 			name:        "Env var present",
 			envKey:      TraceParentKey,
-			envValue:    "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-00",
+			envValue:    "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01",
 			wantTraceID: mustTraceIDFromHex("4bf92f3577b34da6a3ce929d0e0e4736"),
 			wantSpanID:  mustSpanIDFromHex("00f067aa0ba902b7"),
 			wantErr:     false,
